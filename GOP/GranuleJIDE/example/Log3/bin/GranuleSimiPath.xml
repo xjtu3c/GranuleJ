@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><g-path md5="ADDEDC6D8C5D16D427803D9A803BC695"><path name="gConcoleLogger" value="LocalAppender:hasDisk"/><path name="gLowOverload" value="AbstractGenerator:overload"/><path name="gPlainText" value="AbstractGenerator:overload,SysLogGenerator:safetyIndex"/><path name="gLowUseRatio" value="WriteUtil:useRatio"/></g-path>

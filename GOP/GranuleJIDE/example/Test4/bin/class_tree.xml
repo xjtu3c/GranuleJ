@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><class granule0="g0" name="Object"><class name="AbstractMethodTester"><class name="MethodTester2"/></class><class name="JGFInstrumentor"/><class granule0="g1" name="JGFMethodBench" shadow_class0="g1_JGFMethodBench"/><class name="JGFTimer"/><class name="MethodTester"/></class>

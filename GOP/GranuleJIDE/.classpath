@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry path="src" kind="src"/>
+	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6" kind="con"/>
+	<classpathentry path="lib/beaver-rt.jar" kind="lib"/>
+	<classpathentry path="lib/beaver.jar" kind="lib"/>
+	<classpathentry path="lib/jastadd2.jar" kind="lib"/>
+	<classpathentry path="lib/JastAddParser.jar" kind="lib"/>
+	<classpathentry path="lib/JFlex.jar" kind="lib"/>
+	<classpathentry path="lib/proj.jar" kind="lib"/>
+	<classpathentry path="lib/jdom.jar" kind="lib"/>
+	<classpathentry path="system/javassist.jar" kind="lib"/>
+	<classpathentry path="bin" kind="output"/>
+</classpath>

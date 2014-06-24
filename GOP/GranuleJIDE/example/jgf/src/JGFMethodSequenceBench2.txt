@@ -1,0 +1,95 @@
+
+granule g01(MethodSeq_01){
+  {return true;}
+class MethodSeq_01{
+	private static int k = 0;
+	
+	public void instance_method()
+	{k++;}
+}
+
+granule g02(MethodSeq_02){
+  {return true;}
+class MethodSeq_02{
+	private static int k = 0;
+	
+	 public void instance_method(){(new MethodSeq_01()).instance_method();}
+}
+
+
+granule g03(MethodSeq_03){
+  {return true;}
+class MethodSeq_03{
+	private static int k = 0;
+	
+ public void instance_method(){(new MethodSeq_02()).instance_method();}
+}
+
+granule g04(MethodSeq_04){
+  {return true;}
+class MethodSeq_04{
+	private static int k = 0;
+	
+public void instance_method(){(new MethodSeq_03()).instance_method();}
+}
+
+
+
+granule g05(MethodSeq_05){
+  {return true;}
+class MethodSeq_05{
+	private static int k = 0;
+	
+public void instance_method(){(new MethodSeq_04()).instance_method();}
+}
+
+granule g06(MethodSeq_06){
+  {return true;}
+class MethodSeq_06{
+	private static int k = 0;
+	
+public void instance_method(){(new MethodSeq_05()).instance_method();}
+}
+
+
+granule g07(MethodSeq_07){
+  {return true;}
+class MethodSeq_07{
+	private static int k = 0;
+	
+public void instance_method(){(new MethodSeq_06()).instance_method();}
+}
+
+granule g08(MethodSeq_08){
+  {return true;}
+class MethodSeq_08{
+	private static int k = 0;
+	
+public void instance_method(){(new MethodSeq_07()).instance_method();}
+}
+
+
+granule g09(MethodSeq_09){
+  {return true;}
+class MethodSeq_09{
+	private static int k = 0;
+	
+public void instance_method(){(new MethodSeq_08()).instance_method();}
+}
+
+
+granule g10(MethodSeq_10){
+  {return true;}
+class MethodSeq_10{
+	private static int k = 0;
+	
+public void instance_method(){(new MethodSeq_09()).instance_method();}
+}
+
+granule g11(MethodSeq_11){
+  {return true;}
+class MethodSeq_11{
+	private static int k = 0;
+	
+public void instance_method(){(new MethodSeq_10()).instance_method();}
+}

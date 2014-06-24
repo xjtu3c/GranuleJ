@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><g-path md5="FB95763F971660A9DA94EB0A10DC7A5C"><path name="gFileLogger" value="LocalAppender:hasDisk"/><path name="gHighUseRatio" value="WriteUtil:useRatio"/><path name="gFlowControl" value="AbstractGenerator:overload"/><path name="gEncrypt" value="AbstractGenerator:overload,SysLogGenerator:safetyIndex"/></g-path>

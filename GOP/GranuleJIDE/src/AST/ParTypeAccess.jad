@@ -1,0 +1,310 @@
+// Decompiled by DJ v3.7.7.81 Copyright 2004 Atanas Neshkov  Date: 2013/6/14 19:41:53
+// Home Page : http://members.fortunecity.com/neshkov/dj.html  - Check often for new version!
+// Decompiler options: packimports(3) 
+// Source File Name:   ParTypeAccess.java
+
+package AST;
+
+import java.io.PrintStream;
+import java.util.ArrayList;
+
+// Referenced classes of package AST:
+//            Access, ASTNode, TypeDecl, GenericTypeDecl, 
+//            ParTypeDecl, TypeVariable, List, Expr, 
+//            SimpleSet
+
+public class ParTypeAccess extends Access
+    implements Cloneable
+{
+
+    public void flushCache()
+    {
+        super.flushCache();
+        type_computed = false;
+        type_value = null;
+    }
+
+    public void flushCollectionCache()
+    {
+        super.flushCollectionCache();
+    }
+
+    public ParTypeAccess clone()
+        throws CloneNotSupportedException
+    {
+        ParTypeAccess node = (ParTypeAccess)super.clone();
+        node.type_computed = false;
+        node.type_value = null;
+        node.in$Circle(false);
+        node.is$Final(false);
+        return node;
+    }
+
+    public ParTypeAccess copy()
+    {
+        ParTypeAccess node;
+        node = clone();
+        if(children != null)
+            node.children = (ASTNode[])children.clone();
+        return node;
+        CloneNotSupportedException clonenotsupportedexception;
+        clonenotsupportedexception;
+        System.err.println((new StringBuilder("Error: Could not clone node of type ")).append(getClass().getName()).append("!").toString());
+        return null;
+    }
+
+    public ParTypeAccess fullCopy()
+    {
+        ParTypeAccess res = copy();
+        for(int i = 0; i < getNumChildNoTransform(); i++)
+        {
+            ASTNode node = getChildNoTransform(i);
+            if(node != null)
+                node = node.fullCopy();
+            res.setChild(node, i);
+        }
+
+        return res;
+    }
+
+    public boolean isRaw()
+    {
+        return false;
+    }
+
+    public void typeCheck()
+    {
+        super.typeCheck();
+        if(!genericDecl().isUnknown())
+        {
+            TypeDecl type = type();
+            if(!genericDecl().isGenericType())
+                error((new StringBuilder(String.valueOf(genericDecl().typeName()))).append(" is not a generic type but used as one in ").append(this).toString());
+            else
+            if(!type.isRawType() && type.isNestedType() && type.enclosingType().isRawType())
+            {
+                error("Can not access a member type of a raw type as a parameterized type");
+            } else
+            {
+                GenericTypeDecl decl = (GenericTypeDecl)genericDecl();
+                GenericTypeDecl original = (GenericTypeDecl)decl.original();
+                if(original.getNumTypeParameter() != getNumTypeArgument())
+                {
+                    error((new StringBuilder(String.valueOf(decl.typeName()))).append(" takes ").append(original.getNumTypeParameter()).append(" type parameters, not ").append(getNumTypeArgument()).append(" as used in ").append(this).toString());
+                } else
+                {
+                    ParTypeDecl typeDecl = (ParTypeDecl)type();
+                    for(int i = 0; i < getNumTypeArgument(); i++)
+                        if(!getTypeArgument(i).type().instanceOf(original.getTypeParameter(i)))
+                            error((new StringBuilder("type argument ")).append(i).append(" is of type ").append(getTypeArgument(i).type().typeName()).append(" which is not a subtype of ").append(original.getTypeParameter(i).typeName()).toString());
+
+                }
+            }
+        }
+    }
+
+    public void toString(StringBuffer s)
+    {
+        getTypeAccess().toString(s);
+        s.append("<");
+        for(int i = 0; i < getNumTypeArgument(); i++)
+        {
+            if(i != 0)
+                s.append(", ");
+            getTypeArgument(i).toString(s);
+        }
+
+        s.append(">");
+    }
+
+    public ParTypeAccess()
+    {
+        setChild(new List(), 1);
+    }
+
+    public ParTypeAccess(Access p0, List p1)
+    {
+        setChild(p0, 0);
+        setChild(p1, 1);
+    }
+
+    protected int numChildren()
+    {
+        return 2;
+    }
+
+    public boolean mayHaveRewrite()
+    {
+        return false;
+    }
+
+    public void setTypeAccess(Access node)
+    {
+        setChild(node, 0);
+    }
+
+    public Access getTypeAccess()
+    {
+        return (Access)getChild(0);
+    }
+
+    public Access getTypeAccessNoTransform()
+    {
+        return (Access)getChildNoTransform(0);
+    }
+
+    public void setTypeArgumentList(List list)
+    {
+        setChild(list, 1);
+    }
+
+    public int getNumTypeArgument()
+    {
+        return getTypeArgumentList().getNumChild();
+    }
+
+    public Access getTypeArgument(int i)
+    {
+        return (Access)getTypeArgumentList().getChild(i);
+    }
+
+    public void addTypeArgument(Access node)
+    {
+        List list = parent != null && state != null ? getTypeArgumentList() : getTypeArgumentListNoTransform();
+        list.addChild(node);
+    }
+
+    public void addTypeArgumentNoTransform(Access node)
+    {
+        List list = getTypeArgumentListNoTransform();
+        list.addChild(node);
+    }
+
+    public void setTypeArgument(Access node, int i)
+    {
+        List list = getTypeArgumentList();
+        list.setChild(node, i);
+    }
+
+    public List getTypeArguments()
+    {
+        return getTypeArgumentList();
+    }
+
+    public List getTypeArgumentsNoTransform()
+    {
+        return getTypeArgumentListNoTransform();
+    }
+
+    public List getTypeArgumentList()
+    {
+        List list = (List)(List)getChild(1);
+        list.getNumChild();
+        return list;
+    }
+
+    public List getTypeArgumentListNoTransform()
+    {
+        return (List)(List)getChildNoTransform(1);
+    }
+
+    public Expr unqualifiedScope()
+    {
+        ASTNode.State state = state();
+        Expr unqualifiedScope_value = unqualifiedScope_compute();
+        return unqualifiedScope_value;
+    }
+
+    private Expr unqualifiedScope_compute()
+    {
+        return (getParent() instanceof Access) ? ((Access)getParent()).unqualifiedScope() : super.unqualifiedScope();
+    }
+
+    public TypeDecl type()
+    {
+        if(type_computed)
+            return type_value;
+        ASTNode.State state = state();
+        int num = state.boundariesCrossed;
+        boolean isFinal = is$Final();
+        type_value = type_compute();
+        if(isFinal && num == state().boundariesCrossed)
+            type_computed = true;
+        return type_value;
+    }
+
+    private TypeDecl type_compute()
+    {
+        TypeDecl typeDecl = genericDecl();
+        if(typeDecl instanceof GenericTypeDecl)
+        {
+            if(unqualifiedScope().getParent().getParent() instanceof TypeDecl)
+                return ((GenericTypeDecl)typeDecl).lookupParTypeDecl(this);
+            ArrayList args = new ArrayList();
+            for(int i = 0; i < getNumTypeArgument(); i++)
+                args.add(getTypeArgument(i).type());
+
+            return ((GenericTypeDecl)typeDecl).lookupParTypeDecl(args);
+        } else
+        {
+            return typeDecl;
+        }
+    }
+
+    public TypeDecl genericDecl()
+    {
+        ASTNode.State state = state();
+        TypeDecl genericDecl_value = genericDecl_compute();
+        return genericDecl_value;
+    }
+
+    private TypeDecl genericDecl_compute()
+    {
+        return getTypeAccess().type();
+    }
+
+    public boolean isTypeAccess()
+    {
+        ASTNode.State state = state();
+        boolean isTypeAccess_value = isTypeAccess_compute();
+        return isTypeAccess_value;
+    }
+
+    private boolean isTypeAccess_compute()
+    {
+        return true;
+    }
+
+    public SimpleSet Define_SimpleSet_lookupType(ASTNode caller, ASTNode child, String name)
+    {
+        if(caller == getTypeArgumentListNoTransform())
+        {
+            int childIndex = caller.getIndexOfChild(child);
+            return unqualifiedScope().lookupType(name);
+        } else
+        {
+            return getParent().Define_SimpleSet_lookupType(this, caller, name);
+        }
+    }
+
+    public ASTNode rewriteTo()
+    {
+        return super.rewriteTo();
+    }
+
+    public volatile ASTNode fullCopy()
+    {
+        return (ASTNode)fullCopy();
+    }
+
+    public volatile ASTNode copy()
+    {
+        return (ASTNode)copy();
+    }
+
+    public volatile Access clone()
+        throws CloneNotSupportedException
+    {
+        return clone();
+    }
+}
