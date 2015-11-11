@@ -1,18 +1,14 @@
-GranuleJ简介
+The GranuleJ Language
 ========
 
-GranuleJ语言扩展自Java语言，增加了上下文变量、影子类、粒、适合性测试等新的语言构造，最大的优点在于，用GranuleJ语言编写的程序具备适合性感知能力和动态演化能力，以下是GranuleJ添加的一些比较重要的关键字和概念：
+The GranuleJ language is built on top of Java. The extended language constructs primarily  contain context variable, granule, shadow class and fitness test. The most preeminent peculiarity of it is that the language provides the abilities of execution environment perception and dynamic behavioral evolution depending on the environment for the developers. The introduced new syntaxes and semantics are outlined as follows:
 
-external：声明上下文的关键字，表名了粒所关心的条件。由于面向粒的编程思想主要用在分布式环境中，所以上下文被定义为公共的条件，相当于所有程序外部公用的一个变量，在程序启动的时候，需要向服务器注册，并获得当前上下文对应的值。
+external: it is the keyword that declares context variable, which is context information that the program is interested in. Context variable is a special variable that is shared by many applications or processes in the distrusted environment. As a result, when a granule program is started, the declared context variables are required to be registered into the central server, and meanwhile retrieved the effective values from it.
+granule: it is the keyword that declares granule, like the keyword class. But it must be attached to a specific base class.
+within: it is the keyword that declares shadow class, which is code fragment that supplements some behaviors for its base class in a modular way. Shadow class is encapsulated into a granule construct, and is selected by fitness conditions. Additionally, it serves solely as one base class only once in a granule. For this reason, it has not its own identify.
 
-granule：粒声明的关键字，和java中的class关键字类似，但不同的是，粒只有附着在特定的基类上才有意义，所以在用granule声明粒的时候，必须同时指明该粒对应的基类名字.
-
-within：声明影子类的关键字，影子类的作用是封装基类方法在粒满足适合性条件的情况下，实际要执行的方法，所以影子类在声明的时候需要指定基类、粒和粒对应的方法。虽然影子类在语法结构上可以看做一个Java类，但是不一样的是，影子类只有在对应的粒满足适合性条件的情况下才会被使用，而且影子类不能指定名字，它的名字将由粒名和类名共同组成。下面是一个影子类的声明：
-
-以上三个关键字分别表示了GranuleJ语言中三个最重要的语法结构：上下文、粒和影子类，接下来简单介绍一下GranuleJ语言所需要的几个关键过程：
-
-适合性测试：检查粒对应的上下文是否满足预期的条件。这个过程主要由程序在运行的时候触发，控制程序会执行找到调用方法对应的粒，以及该粒在粒树上到顶层粒之间所有的父粒，并执行粒中的fitness方法，如果都满足适合性条件，那就说明该方法依赖的条件都满足了，只要一个粒不符合条件，就说明方法还不能在预期的环境里执行，需要到服务器上查找适合环境的粒和影子类。
-
-代码替换：粒在不满足适合性条件的情况下要进入的过程，包括到服务器上查找相似粒、类和对象的转换和粒树的更新，以及新方法的执行等过程。
-
-对象更新：将旧对象替换成新对象的过程。由于面向粒的编程思想是基于对象展开的，所以对象更新是GranuleJ中非常重要的一个过程，它既可以发生在代码替换流程中间，也可以在这之后，而本文主要采用惰性更新对象的策略，所以将该过程放在对象被使用之前，这样可以将对象更新过程和代码替换过程分离，从局部提高代码替换的效率，并且可以避免更新但不使用的无效更新操作。
+The important language mechanisms of GranueJ are illustrated in the following
+Fitness test: the mechanism is used to check that the interested context is suitable for the actual environment. The check is triggered at runtime. The execution control automatically intercepts the corresponding method invocation sites where the program behaviors are to be modified due to the potential context changes, and checks the fitness tests of all ancestors of the current granule over granule tree one by one. If they fit for the current environments, the execution control continues normally. Otherwise, it enters the process of granule substitution.
+Granule substation: When the running granule is unsuitable for the current environment, the execution control will query the desired granules from individual library. If founded granules satisfy the current execution contexts by fitness test, they will be composed into base classes to generate new class variants, replacing the running classes for execution. If the query fails, the process will go on repetitively until it successes.
+Dynamic evolution: the formed class variant is substituted during program execution. It includes new class is loaded and many stale instances are updated lazily.
+The more details of the current language is available as a summary.
