@@ -17,4 +17,4 @@ The important language mechanisms of GranueJ are illustrated in the following
 
 **Dynamic evolution**: the formed class variant is substituted during program execution. It includes new class is loaded and many existing stale instances are updated lazily.
 
-The more details of the current language are available as a summary.
+The more details of the current language are available as [a summary](https://github.com/xjtu3c/GranuleJ/blob/master/GOP/Documents/GranuleJSummary.pdf).
