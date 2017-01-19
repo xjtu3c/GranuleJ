@@ -7,7 +7,7 @@ The GranuleJ language is built on top of Java. The extended language constructs 
 
 **granule**: it is the keyword that declares granule, like the keyword class. But it must be attached to a specific base class.
 
-**within**: it is the keyword that declares shadow class, which is code fragment that supplements some behaviors for its base class in a modular way. Shadow class is encapsulated into a granule construct, and is selected by fitness conditions. Additionally, it serves solely as one base class only once in a granule. For this reason, it has not its own identify.
+**within**: it is the keyword that declares shadow class, which is code fragment that supplements some behaviors for its base class in a modular way. Shadow class is encapsulated into a granule construct, and is selected by fitness conditions. Additionally, it serves solely as one base class only once in a granule. For this reason, it has not its own identity.
 
 The important language mechanisms of GranueJ are illustrated in the following
 
