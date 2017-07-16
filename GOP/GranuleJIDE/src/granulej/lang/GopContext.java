@@ -28,6 +28,7 @@ public class GopContext {
 		   if(contexts.containsKey(name)){
 		     Context cn=contexts.get(name);
 		     if(cn!=null && cn.getValue()!=null){
+		    	// System.out.println("GopContext======   getContext method the context is: "+cn.getName()+":"+cn.getValue().trim());
 		    	 return cn.getValue().trim();
 		     }
 		     return "";			   
@@ -67,7 +68,8 @@ public class GopContext {
 		    Context cn=new Context(name,value,modifiers);
 		    if(!contexts.containsKey(name))
 		    contexts.put(name,cn);
-		    //System.out.println("context variable is added!");		
+		    //ceshi liyu
+		   // System.out.println("context variable is added!");		
 	}
 	
 	public static synchronized void modifyContext(String name,String newValue)

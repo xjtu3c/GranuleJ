@@ -2,6 +2,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.File;
 
+//log2
 granule gFileLogger(LocalAppender){
 	external int hasDisk;
 	{
@@ -19,3 +20,5 @@ class LocalAppender within gFileLogger {
 		seed.log(msg);
 	}
 }
+
+

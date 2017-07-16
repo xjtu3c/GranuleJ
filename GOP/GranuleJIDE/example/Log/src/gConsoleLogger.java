@@ -2,6 +2,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.File;
 
+//log
 granule gConcoleLogger(LocalAppender){
 	external int hasDisk;
 	{
@@ -13,6 +14,7 @@ granule gConcoleLogger(LocalAppender){
 }
 
 class LocalAppender within gConcoleLogger {
+	
 	public void log(String msg) {
 		System.out.println("output the msg:" + msg + " in console");
 		seed.log(msg);

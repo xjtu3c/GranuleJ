@@ -11,7 +11,7 @@ public interface ConstString {
 	public static final String[] windowItems = new String[] { "上下文", "演化历史", "个体层次", "网络个体分布","网络仿真" };
 	public static final String[] helpItems = new String[] { "关于GranuleJ", "网站" };*/
 	
-	public static final String[] menus = new String[] { "File", "Edit", "Project", "Run", "Window", "Help" };
+	public static final String[] menus = new String[] { "File", "Edit", "Project", "Run", "Window", "Help" ,"Server"};
 	public static final String[] fileItems = new String[] { "New", "Save All", "Switch Project", "Close Project"};
 	public static final String[] fileSubItems = new String[] { "Project", "Package", "Class", "Interface", "Granule",
 			"Shadow Class" };
@@ -20,6 +20,9 @@ public interface ConstString {
 	public static final String[] runItems = new String[] { "Run", "Debug","Runtime Environment"};
 	public static final String[] windowItems = new String[] { "Context Variable", "Envolution History", "Individual Hierarchy", "Network Individual Distribution","Local Granule Library"};
 	public static final String[] helpItems = new String[] { "About GranuleJ", "Website" };
+	
+	//~~~~~~~~~~~~~~~~~~~~~来自孙丽玉的波浪线~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	public static final String[] serverItems = new String[] { "Context Server", "Granue Server" };
 	
 	
 	

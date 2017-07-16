@@ -26,7 +26,7 @@ public class GranuleRegister implements Runnable {
     	Socket socket=null;
     	OutputStream socketPut;
     	PrintWriter socketWriter;
-		try {	
+		try {				
 			socket=new Socket(InetAddress.getLocalHost(),GranuleConstant.LOCAL_AS_SERVER_PORT);
 	        socketPut=socket.getOutputStream();
 	        socketWriter=new PrintWriter(socketPut);
@@ -39,13 +39,18 @@ public class GranuleRegister implements Runnable {
 			socketWriter.flush();          
 			socketPut.close();
 			socketWriter.close();  
-            socket.close();  
-            
+            socket.close(); 
+            /*
+             * 测试liyu
+             */
+		//	Thread.currentThread().yield();;		
+		
 		} catch (BindException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
     }    
 }
 

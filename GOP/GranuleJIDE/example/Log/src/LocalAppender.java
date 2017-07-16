@@ -12,4 +12,6 @@ public class LocalAppender extends AbstractAppender{
 	public void log(String msg) {
 		System.out.println("log method in LocalAppender");
 	}
+	
+	
 }

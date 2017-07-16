@@ -37,21 +37,24 @@ public class GranuleSearch {
 			socketWriter.println(send_packet.getGranuleName());
 			socketWriter.println(send_packet.getRetryInfo());
 			socketWriter.println(IndividualInfo.getInstance().getWorkDirectory());
-			socketWriter.println(send_packet.getPosition());			
+			socketWriter.println(send_packet.getPosition());	
+			  
             System.out.println("Granule searching for unfit granule:" + send_packet.getGranuleName() + " of individual:" + send_packet.getMd5Code());
 			socketWriter.flush();
 			while (flag) {
 				result = Utility.getAllInputFromSocket(inputFromSocket);
+				 // System.out.println("XD");
 				if (!result.isEmpty()) {
 					flag = false;
 				}
 			}
 			setLookupResult(result);
 			System.out.println("Result is :"+result);
-			inputFromSocket.close();
-			socketPut.close();
-			socketWriter.close();
-			socket.close();
+			//鲤鱼注释掉的
+			//inputFromSocket.close();
+			//socketPut.close();
+			//socketWriter.close();
+			//socket.close();
 		} catch (BindException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

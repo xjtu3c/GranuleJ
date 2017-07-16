@@ -1,7 +1,7 @@
 granule gFlowControl(AbstractGenerator){
 	external double overload;
 	{
-		if(overload >0.8)
+		if(overload >0.5)
 			return true;
 		else 
 			return false;

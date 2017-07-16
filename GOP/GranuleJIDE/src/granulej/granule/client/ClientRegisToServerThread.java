@@ -32,7 +32,13 @@ public class ClientRegisToServerThread implements Runnable {
 		}
 		try {
 			synchronized (this) {
+				/*
+				 * ceshi 阻塞在哪里发生
+				 */
+				//System.out.println("服务器同步问题");
 				Utility.writeNodeListToXML(waitRegisList, filePath);
+				//System.out.println("同步 granulej.granule.client : ClientRegisToServerThread"+Thread.currentThread().getName()+": pid"+Thread.currentThread().getId()+"is running !");
+				
 			}
 			OutputStream socketOutput = null;
 			PrintWriter socketWriter = null;
@@ -58,11 +64,13 @@ public class ClientRegisToServerThread implements Runnable {
 				// 相似粒注册通信异常的处理,存储信息
 				HandRegisExceptionSaveThread hrct = new HandRegisExceptionSaveThread(waitRegisList);
 				new Thread(hrct).start();
+				//System.out.println("granulej.granule.client : ClientRegisToServerThread"+Thread.currentThread().getName()+": pid"+Thread.currentThread().getId()+"is running !");
 			}
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		} catch (TransformerFactoryConfigurationError e) {
 			e.printStackTrace();
+			
 		}
 	}
 }

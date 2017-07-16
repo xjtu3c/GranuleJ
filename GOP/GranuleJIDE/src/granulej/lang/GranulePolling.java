@@ -76,7 +76,9 @@ public class GranulePolling {
 		Class<?> simig_class = null;
 		if (result != null && !result.equals("")) {
 			ReceivePacket rp = enclosingPacketFromReceiveSide(result);		
-			if(rp.getSimilarGranuleName()!=null){	
+			if(rp.getSimilarGranuleName()!=null){
+				//liyu test 
+				//System.out.println("in the granule polling file the similar granule is "+rp.getSimilarGranuleName()+" in the path of:"+rp.getSimilarGranuleFilePath());
 			simig_class = loadGranule(rp.getSimilarGranuleFilePath(), rp.getSimilarGranuleName());
 			return simig_class;
 			}	
@@ -90,7 +92,9 @@ public class GranulePolling {
 		if(!new File(path+File.separator+gname+".class").exists())
 	    return null;
 		try {			
-			FileSystemClassLoader newloader = new FileSystemClassLoader(path);			
+			FileSystemClassLoader newloader = new FileSystemClassLoader(path);	
+			//liyu  test
+			//System.out.println("in the granule polling file the remote granule path is :"+path);
 			class1 = newloader.loadClass(gname);			
 			newloader.SearchAndCache(gname, class1);
 			return class1;
@@ -102,6 +106,8 @@ public class GranulePolling {
 	
 	//找到相似粒后，从top到down的检查适合性	
 	public Class<?> getAllSimilarGranuleClass(String result) {
+		//liyu  tets
+		//System.out.println("it is testing the  fitness of the similargranule ......");
 		Class<?> simig_class =null;
 		if (result != null && !result.equals("")) {
 			ReceivePacket rp = enclosingPacketFromReceiveSide(result);
@@ -136,6 +142,8 @@ public class GranulePolling {
 		if (filename != null && "".equals(filename)) {
 			int index = filename.lastIndexOf(File.separator);
 			filename = filename.substring(0, index > 0 ? index : 0);
+			//liyu  tets
+			//System.out.println("getSimilarGranulePath the filename  is :"+filename);
 		}
 		return filename;
 	}
@@ -160,6 +168,8 @@ public class GranulePolling {
 	//解析字符串并放入接收包内
 	public ReceivePacket enclosingPacketFromReceiveSide(String result) {		
 		String[] res = new String[4];
+		//liyu  tets
+		//System.out.println("receive ..... enclosingPacketFromReceiveSide.........");
 		if (!result.isEmpty() && !result.trim().equals(GranuleConstant.GRANULE_SEARCH_FAIL)) {
 			res = result.split(";");
 			r_packet = ReceivePacket.getInstance();

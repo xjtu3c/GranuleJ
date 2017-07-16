@@ -168,6 +168,7 @@ public class JGFMethodBench implements JGFSection1{
     }
     
     JGFInstrumentor.printperfTimer("Section1:Method:Same:FinalInstance");
+
 */
     MethodTester mt = new MethodTester(); 
 

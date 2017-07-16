@@ -134,7 +134,8 @@ public class JGFMethodBench implements JGFSection1{
 	synch_instance_method();
 	synch_instance_method();
       }
-      JGFInstrumentor.stopTimer("Section1:Method:Same:SynchronizedInstance");          time = JGFInstrumentor.readTimer("Section1:Method:Same:SynchronizedInstance");
+      JGFInstrumentor.stopTimer("Section1:Method:Same:SynchronizedInstance");          
+      time = JGFInstrumentor.readTimer("Section1:Method:Same:SynchronizedInstance");
       JGFInstrumentor.addOpsToTimer("Section1:Method:Same:SynchronizedInstance", (double) 16*size);
       size *=2; 
     }    

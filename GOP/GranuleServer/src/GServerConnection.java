@@ -63,20 +63,29 @@ public class GServerConnection implements Runnable {
 				String action = Utility.getInputFromSocket(inputFromSocket);
 
 				String filePath = "";
+				
+				//liyu ceshi 服务器的连通
+				System.out.println("粒服务器连接：action is :"+ action);
+				System.out.println("粒服务器连接 ：inputFromSocket is :"+inputFromSocket);
+				
 				if (action.equals(ConstantVariable.ACTION_GET)) {
 					// local get file from server
+					System.out.println("粒服务器连接 ：ConstantVariable.ACTION_GET is :"+ConstantVariable.ACTION_GET);
 					filePath = Utility.getInputFromSocket(inputFromSocket);
 					handleGetAction(filePath, outputToSocket);
 				} else if (action.equals(ConstantVariable.ACTION_PUT)) {
 					// local sent class file to server
+					System.out.println("粒服务器连接 ：ConstantVariable.ACTION_PUT is :"+ConstantVariable.ACTION_PUT);
 					filePath = Utility.getInputFromSocket(inputFromSocket);
 					handlerPutAction(filePath, inputFromSocket);
 				} else if (action.equals(ConstantVariable.ACTION_REGISTER)) {
 					// local sent update xml config file to server
+					System.out.println("粒服务器连接 ：ConstantVariable.ACTION_REGISTER is :"+ConstantVariable.ACTION_REGISTER);
 					filePath = Utility.getInputFromSocket(inputFromSocket);
 					handleRegisAction(filePath, inputFromSocket, socket);
 				} else if (action.equals(ConstantVariable.ACTION_SEARCH)) {
 					// find the similar granule
+					System.out.println("粒服务器连接 ：ConstantVariable.ACTION_SEARCH is :"+ConstantVariable.ACTION_SEARCH);
 					String projectPath = Utility.getInputFromSocket(inputFromSocket);
 					String md5Code = Utility.getInputFromSocket(inputFromSocket);
 					String similarPath = Utility.getInputFromSocket(inputFromSocket);
@@ -84,11 +93,13 @@ public class GServerConnection implements Runnable {
 					int position = Integer.valueOf(Utility.getInputFromSocket(inputFromSocket));
 					handleSearchAction(md5Code, similarPath, socket, retryInfo, position, projectPath);
 				} else if (action.equals(ConstantVariable.ACTION_ACTIVE)) {
+					System.out.println("粒服务器连接 ：ConstantVariable.ACTION_ACTIVE is :"+ConstantVariable.ACTION_ACTIVE);
 					// get all active client
 					PrintWriter socketWriter = new PrintWriter(outputToSocket);
 					// socketWriter.println(Utility.activeToString(granuleServer.getActive()));
 					socketWriter.close();
 				} else if (action.equals(ConstantVariable.ACTION_BASE)) {
+					System.out.println("粒服务器连接 ：ConstantVariable.ACTION_BASE is :"+ConstantVariable.ACTION_BASE);
 					// sent server config file to client
 					handleBaseAction(outputToSocket);
 				} else {
@@ -179,11 +190,14 @@ public class GServerConnection implements Runnable {
 
 		public void handleSearchAction(String md5Code, String similarPath, Socket socket, String retryInfo, int position, String projectPath) {
 			granuleServer.getSimilarGranule(md5Code, similarPath, socket, socket.getInetAddress().getHostAddress(), retryInfo, position, projectPath);
+			
+			//System.out.println("gs ip : "+socket.getInetAddress().getHostAddress());
 			// 暂时不考虑
 			// handleIndActive(socket, md5Code);
 		}
 
-		public void handleBaseAction(OutputStream outputToSocket) {
+		public void handleBaseAction(OutputStream outputToSocket
+				) {
 			try {
 				InputStream fi = new FileInputStream(new File(Utility.getServerFileConfigPath()));
 				byte[] buffer = new byte[1212];
@@ -218,8 +232,8 @@ public class GServerConnection implements Runnable {
 		}
 	}
 
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		System.out.println("GServerConnection is running!!");
 		new Thread(GServerConnection.getInstance()).start();
-	}
+	}*/
 }

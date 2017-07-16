@@ -5,7 +5,7 @@ import java.io.File;
 public class WriteUtil{
     public void write(String msg){
 	try {   
-		File file = new File("log.txt");
+		File file = new File("./log.txt");
 		if(!file.exists())
 			file.createNewFile();
 	         	FileWriter writer = new FileWriter(file);

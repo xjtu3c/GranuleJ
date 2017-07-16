@@ -9,6 +9,7 @@ import granulej.gui.action.BuildAction;
 import granulej.gui.action.CleanAction;
 import granulej.gui.action.CloseAction;
 import granulej.gui.action.ConfigAction;
+import granulej.gui.action.ContextGranuleJAction;
 import granulej.gui.action.CopyAction;
 import granulej.gui.action.CutAction;
 import granulej.gui.action.DeleteTextAction;
@@ -19,6 +20,7 @@ import granulej.gui.action.DispIndiAction;
 import granulej.gui.action.DispNetSimilarAction;
 import granulej.gui.action.FindAndReplaceAction;
 import granulej.gui.action.GVMConfigAction;
+import granulej.gui.action.GranueGranuleJAction;
 import granulej.gui.action.NewClassAction;
 import granulej.gui.action.NewGranuleAction;
 import granulej.gui.action.NewInterfaceAction;
@@ -26,14 +28,10 @@ import granulej.gui.action.NewPackageAction;
 import granulej.gui.action.NewProjectAction;
 import granulej.gui.action.NewShadowAction;
 import granulej.gui.action.PasteAction;
-import granulej.gui.action.RedoAction;
 import granulej.gui.action.RunAction;
 import granulej.gui.action.SimulateConfigAction;
 import granulej.gui.action.StopAction;
 import granulej.gui.action.SwitchAction;
-import granulej.gui.action.UndoAction;
-import granulej.gui.action.UndoAndRedoAction;
-import granulej.gui.action.UndoWrapper;
 import granulej.util.LookAndFeelUtility;
 import granulej.util.TempFile;
 import granulej.util.xmlUtil;
@@ -71,7 +69,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
 import javax.swing.JToolBar;
@@ -81,10 +78,8 @@ import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.text.StyledEditorKit;
 import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.UndoManager;
-import javax.swing.undo.UndoableEdit;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -195,6 +190,9 @@ public class MainFrame extends JFrame {
 		cc = CClientConnection.getInstance();
 		new Thread(cc).start();
 
+		
+		
+
 	}
 
 	public void start() {
@@ -274,7 +272,7 @@ public class MainFrame extends JFrame {
 				pfile.mkdirs();
 				// bf.close();
 				file.delete();
-				return;
+				return ;
 			}
 
 			config.setProjectName(ppath.substring(ppath.lastIndexOf(File.separator) + 1));
@@ -282,6 +280,7 @@ public class MainFrame extends JFrame {
 			packageTree.newProject(config.getProjectName());
 			serachFiles(ppath + File.separator + "src");
 			config.setClasspath(loadExistedClassPath());
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -534,6 +533,29 @@ public class MainFrame extends JFrame {
 		helpMenu.add(helpItemsWebsite);
 		mBar.add(helpMenu);
 		setJMenuBar(mBar);
+		
+		//~~~~~~~~~~~~~~~~~~~~~~~~~来自孙丽玉的波浪线~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		//======================“服务器”部分====================================
+		//~~~~~~~~~~~~~~~~~~~~~~~~~来自孙丽玉的波浪线~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		/*
+		 * 在ConstString文件中增加了服务器的信息
+		 * 在action文件夹中增加上下文服务器和粒服务器的响应文件
+		 * GranueGranuleJAction 粒服务器
+		 * ContextGranuleJAction上下文服务器
+		 */
+		JMenu serverMenu = new JMenu(ConstString.menus[6]);
+		
+		JMenuItem serverItemscontext = new JMenuItem(ConstString.serverItems[0]);
+		serverItemscontext.addActionListener(new ContextGranuleJAction(this));
+		
+		JMenuItem serverItemsgranue = new JMenuItem(ConstString.serverItems[1]);
+		serverItemsgranue.addActionListener(new GranueGranuleJAction(this));
+		
+		serverMenu.add(serverItemscontext);
+		serverMenu.add(serverItemsgranue);
+		mBar.add(serverMenu);
+		setJMenuBar(mBar);
+		
 	}
 
 	public void changeStatus(String name) {
@@ -752,6 +774,7 @@ public class MainFrame extends JFrame {
 			socketWriter.close();
 			sock.close();
 			// 停止端口的监听
+
 			gc.setFlag(false);
 			cc.setFlag(false);
 

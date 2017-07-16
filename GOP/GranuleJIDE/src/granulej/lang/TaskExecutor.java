@@ -32,6 +32,11 @@ public class TaskExecutor implements ChangeListener {
 		 version=e.getVersion();
 		 if(!gExecutorRegister.isShutdown())
          gExecutorRegister.execute(new GranuleReRegister(sos,version));
+		 /*
+		  * 鲤鱼
+		  * 关闭线程池
+		  */
+		 this.close();
 	 }
 	
 	 //TODO 这里美誉释放线程池资源，导致程序在执行后无法正常退出，所以需要在最后执行该方法关闭线程池

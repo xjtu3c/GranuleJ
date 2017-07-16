@@ -1,3 +1,4 @@
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -12,9 +13,13 @@ public class CServerConnection implements Runnable {
 
 	private ContextServer contextServer;
 
+	private static String currenIp;
+	private static String currenPort;
+	
 	public static CServerConnection getInstance() {
 		if (csc == null) {
 			csc = new CServerConnection();
+			//System.out.println("new a cserver!");
 		}
 		return csc;
 	}
@@ -22,6 +27,7 @@ public class CServerConnection implements Runnable {
 	private CServerConnection() {
 		contextServer = ContextServer.getInstance();
 		contextServer.init();
+		//System.out.println("init cserver!");
 	}
 
 	public void run() {
@@ -51,25 +57,34 @@ public class CServerConnection implements Runnable {
 				InputStream inputFromSocket = socket.getInputStream();
 				String action = Utility.getInputFromSocket(inputFromSocket);
 				String contextStr = null;
+				System.out.println("上下文服务器连接：action is :"+ action);
+				System.out.println("上下文服务器连接 ：inputFromSocket is :"+inputFromSocket);
 				if (ConstantVariable.CONTEXT_REG.equals(action)) {
 					// register context to server
+					System.out.println("上下文服务器连接：ConstantVariable.CONTEXT_REG is :"+ConstantVariable.CONTEXT_REG);
 					contextStr = Utility.getInputFromSocket(inputFromSocket);
 					handleRegAction(contextStr);
 				} else if (ConstantVariable.CONTEXT_UPDATE.equals(action)) {
 					// update context to server
+					System.out.println("上下文服务器连接：ConstantVariable.CONTEXT_UPDATE is :"+ConstantVariable.CONTEXT_UPDATE);
 					contextStr = Utility.getInputFromSocket(inputFromSocket);
 					handleUpdateAction(contextStr);
 				} else if (ConstantVariable.CONTEXT_CLIENT_INT.equals(action)) {
+					System.out.println("上下文服务器连接：ConstantVariable.CONTEXT_CLIENT_INT is :"+ConstantVariable.CONTEXT_CLIENT_INT);
 					// client request to init its context info
 					contextStr = Utility.getInputFromSocket(inputFromSocket);
 					String port = Utility.getInputFromSocket(inputFromSocket);
 					String ip = socket.getInetAddress().getHostAddress();
+					currenIp = ip;
+					currenPort = port;
 					handleClientRegis(contextStr, port, ip);
 					handleInitAction(contextStr, outputToSocket);
 				} else if (ConstantVariable.CONTEXT_GET.equals(action)) {
+					System.out.println("上下文服务器连接：ConstantVariable.CONTEXT_GET is :"+ConstantVariable.CONTEXT_GET);
 					contextStr = Utility.getInputFromSocket(inputFromSocket);
 					handleGetAction(contextStr, outputToSocket);
 				} else if (ConstantVariable.CONTEXT_CLIENT_DES.equals(action)) {
+					System.out.println("上下文服务器连接：ConstantVariable.CONTEXT_CLIENT_DES is :"+ConstantVariable.CONTEXT_CLIENT_DES);
 					String ip = Utility.getInputFromSocket(inputFromSocket);
 					handleClientRemoved(ip);
 				}
@@ -114,9 +129,16 @@ public class CServerConnection implements Runnable {
 			pWriter.close();
 		}
 	}
+	
+	public static String getPort(){
+		return currenPort;
+	}
+	public static String getIp(){
+		return currenIp;
+	}
 
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		System.out.println("CServerConnection is running!!");
 		new Thread(CServerConnection.getInstance()).start();
-	}
+	}*/
 }

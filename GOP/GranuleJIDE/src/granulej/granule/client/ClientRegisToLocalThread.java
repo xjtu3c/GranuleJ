@@ -83,10 +83,21 @@ public class ClientRegisToLocalThread implements Runnable {
 			}
 //			Utility.addNewNodeTrip(localDoc, regisDocNode, nodeElem);
 		}
+		//System.out.println("granulej.granule.client : ClientRegisToLocalThread"+Thread.currentThread().getName()+": pid"+Thread.currentThread().getId()+"is running !");
+		
 		// 内容一次写入文件
 		synchronized (this) {
+			/*
+			 * ceshi 阻塞在哪里发生
+			 */
+		//	System.out.println("本地同步!");
+			
 			Utility.writeToXML(localDoc, individualFilePath);
+		//	System.out.println("同步 granulej.granule.client : ClientRegisToLocalThread"+Thread.currentThread().getName()+": pid"+Thread.currentThread().getId()+"is running !");
+			
 		}
+		
+		
 	}
 	
 	private boolean lookupNode(Node root, String index)

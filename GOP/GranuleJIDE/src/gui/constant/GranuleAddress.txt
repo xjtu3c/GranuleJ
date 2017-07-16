@@ -1,0 +1,18 @@
+package granulej.gui.action;
+import granulej.gui.action.BuildAction;
+import granulej.gui.action.CleanAction;
+import granulej.gui.action.CloseAction;
+import granulej.gui.action.ConfigAction;
+import granulej.gui.action.ContextGranuleJAction;
+import granulej.gui.action.CopyAction;
+import granulej.gui.action.CutAction;
+{
+	public static final String GRANULE_SERVER_IP = "202.117.10.236" ;
+	public static final int LOCAL_AS_SERVER_PORT = 3158 ;
+
+	public static final String GRANULE_REGISTER = "register";
+
+	public static final String GRANULE_SEARCH = "search";
+}
+
+

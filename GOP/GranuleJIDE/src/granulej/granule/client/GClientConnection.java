@@ -76,6 +76,11 @@ public class GClientConnection implements Runnable {
 					}
 				}
 				String filePath = "";
+				
+				//测试 liyu 通信服务器
+				
+				//System.out.println("粒服务器服务器action is "+action);
+				
 				if (action.equals(GranuleConstant.GRANULE_GET)) {
 					// granuleServer get file from client
 					filePath = Utility.getInputFromSocket(inputFromSocket);

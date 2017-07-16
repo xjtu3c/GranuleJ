@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="GVM">
+</Property><Property Name="解决方案文件" Value="C:\Users\lyz\Desktop\GranuleJ-master\GOP\GranuleJIDE\GVM\GVM.sln">
+</Property><Property Name="用户选项文件" Value="C:\Users\lyz\Desktop\GranuleJ-master\GOP\GranuleJIDE\GVM\GVM.suo">
+</Property><Property Name="Date" Value="2017年5月25日">
+</Property><Property Name="Time" Value="17:29">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="GVM.sln" Description="文件已成功备份为 C:\Users\lyz\Desktop\GranuleJ-master\GOP\GranuleJIDE\GVM\GVM.sln.old">
+</Event><Event ErrorLevel="0" Project="" Source="GVM.suo" Description="文件已成功备份为 C:\Users\lyz\Desktop\GranuleJ-master\GOP\GranuleJIDE\GVM\GVM.suo.old">
+</Event><Event ErrorLevel="0" Project="GVM" Source="GVM\GVM.vcproj" Description="Converting project file 'C:\Users\lyz\Desktop\GranuleJ-master\GOP\GranuleJIDE\GVM\GVM\GVM.vcproj'.">
+</Event><Event ErrorLevel="1" Project="GVM" Source="GVM\GVM.vcproj" Description="VCWebServiceProxyGeneratorTool is no longer supported. The tool has been removed from your project settings.">
+</Event><Event ErrorLevel="1" Project="GVM" Source="GVM\GVM.vcproj" Description="MSB8012: $(TargetPath) ('C:\Users\lyz\Desktop\GranuleJ-master\GOP\GranuleJIDE\GVM\GVM\..\..\..\GranuleJIDE\GVM.dll') does not match the Linker's OutputFile property value '..\..\..\GranuleJIDE\GVM.dll' ('C:\Users\lyz\Desktop\GranuleJ-master\GranuleJIDE\GVM.dll') in project configuration 'Debug|Win32'. This may cause your project to build incorrectly. To correct this, please make sure that $(TargetPath) property value matches the value specified in %(Link.OutputFile).">
+</Event><Event ErrorLevel="0" Project="GVM" Source="GVM\GVM.vcproj" Description="Done converting to new project file 'C:\Users\lyz\Desktop\GranuleJ-master\GOP\GranuleJIDE\GVM\GVM\GVM.vcxproj'.">
+</Event><Event ErrorLevel="3" Project="GVM" Source="GVM\GVM.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="GVM.sln" Description="成功转换解决方案">
+</Event><Event ErrorLevel="3" Project="" Source="GVM.sln" Description="Converted">
+</Event></UpgradeLog>

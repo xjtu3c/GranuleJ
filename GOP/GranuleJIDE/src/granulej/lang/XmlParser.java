@@ -300,9 +300,20 @@ public class XmlParser {
 			    setEnvolutionVersion();	
 			    
 			    if(!con_seq.equals("")){
-				new Thread(new ContextRepUpdate(con_seq)).start();
+			    //liyu 
+			    //与线程阻塞无关
+			    	new Thread(new ContextRepUpdate(con_seq)).start();
+			/*    	Thread t = new Thread(new ContextRepUpdate(con_seq));
+			    	t.start();
+			    	t.stop();*/
+				
 			    }
 			    
+			    /*
+			     * 问题2：注释掉  程序正常结束
+			     * 这是重点
+			     */
+			    	
 			    xpar.register(xpar);
 
 			}
@@ -331,6 +342,12 @@ public class XmlParser {
 	 }
 	
 	 public void register(XmlParser xpar) {
+		/*
+		 * 问题3：
+		 * ChangeListener实现的接口存在线程池
+		 * 需要关闭线程
+		 */
+		
 	     for (ChangeListener l : list) {
 	          l.actionChange(new ChangeEvent(xpar.doc,xpar.getNumber()));
 	       }

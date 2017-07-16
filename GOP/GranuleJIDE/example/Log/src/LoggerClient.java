@@ -9,7 +9,7 @@ public class LoggerClient {
 				new LocalAppender());
 		LoggerLevel level = new LoggerLevel("debug");
 		logger.log(level, null); 
-                     /*slg.generate();
-                     System.out.println("log data has retrieveted !");*/
+//                     slg.generate();
+                     System.out.println("log data has retrieveted !");
 	}
 }
