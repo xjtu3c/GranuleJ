@@ -1,1 +1,1 @@
-useRatio:0.7;safetyIndex:0.5;hasDisk:1;overload:0.6
+useRatio:0.5;safetyIndex:0.5;hasDisk:1;overload:0.6

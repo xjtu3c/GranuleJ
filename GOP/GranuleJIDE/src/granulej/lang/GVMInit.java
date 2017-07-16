@@ -87,7 +87,7 @@ public class GVMInit {
 			InvokeAgent.loadAllGranules(GranuleTree.getGranuleList());
 			
 			//发起子线程进行相似粒的注册		
-			new Thread(new GranuleRegister(md5, gvm.curDir, gvm.g_tree, gvm.g_path)).start();
+//			new Thread(new GranuleRegister(md5, gvm.curDir, gvm.g_tree, gvm.g_path)).start();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

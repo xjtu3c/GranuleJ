@@ -2,11 +2,11 @@ package gui.constant;
 
 public class ContextConstant {
 
-	public static final String CONTEXT_SERVER_IP = "202.117.10.175";
+	public static final String CONTEXT_SERVER_IP = "202.117.10.236" ;
 
 	public static final int CONTEXT_CLIENT_PORT = 1219;
-
-	public static final int CONTEXT_SERVER_PORT = 3129;
+	
+	public static final int CONTEXT_SERVER_PORT = 3129 ;
 
 	public static final String CONTEXT_REG = "reg";
 

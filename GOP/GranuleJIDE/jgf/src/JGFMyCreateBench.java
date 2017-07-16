@@ -168,8 +168,7 @@ public static void main (String argv[]){
     JGFMyCreateBench crb6 = new JGFMyCreateBench(120*MAXSIZE);     
     crb6.JGFrun();
     JGFMyCreateBench crb7 = new JGFMyCreateBench(240*MAXSIZE);     
-    crb7.JGFrun();
-    
+    crb7.JGFrun();   
     
   }
 }

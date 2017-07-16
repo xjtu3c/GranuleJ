@@ -109,6 +109,7 @@ public class Utility {
 
 	// 获取客户器端目录
 	public static String getClientDir() {
+		//System.out.println(" the client dir is : "+System.getProperty("user.dir") + File.separator + "client" + File.separator);
 		return System.getProperty("user.dir") + File.separator + "client" + File.separator;
 	}
 
@@ -218,6 +219,8 @@ public class Utility {
 		Socket sock = null;
 		try {
 			sock = new Socket(serverIp, port);
+			//测试 liyu
+			//System.out.println("Utility----    createGranuleConnectionToServer the ip is :"+serverIp +"and the port is " +port);		
 		} catch (Exception e) {
 			System.out.println("The granule server is not started,and it will be register later!");
 			// 相似粒注册通信异常的处理,存储信息
@@ -230,7 +233,10 @@ public class Utility {
 	public static Socket createContextConnectionToServer(String serverIp, int port) {
 		Socket sock = null;
 		try {
+			
 			sock = new Socket(serverIp, port);
+			//ceshi liyu
+			//System.out.println("Utility---- the context ip is:  "+serverIp+" and the port is " + port);
 		} catch (Exception e) {
 			System.out.println("The context server is not started,and it will be register later!");
 			// 相似粒注册通信异常的处理,存储信息

@@ -2,6 +2,7 @@ package granulej.context.client;
 
 import granulej.util.Utility;
 import gui.constant.ContextConstant;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -33,6 +34,7 @@ public class CClientConnection implements Runnable {
 
 	public void run() {
 		try {
+			@SuppressWarnings("resource")
 			ServerSocket serverSocket = new ServerSocket();
 			serverSocket.setReuseAddress(true);
 			serverSocket.bind(new InetSocketAddress(ContextConstant.CONTEXT_CLIENT_PORT));
@@ -69,15 +71,24 @@ public class CClientConnection implements Runnable {
 				String contextStr = "";
 				String contextFrom = "";
 				String port = "";
+				
+				//ceshi 通信 服务器				
+				//System.out.println("上下文服务器action is "+action);
+				
 				if (ContextConstant.CONTEXT_UPDATE.equals(action)) {
 					contextFrom = Utility.getInputFromSocket(inputFromSocket);
 					contextStr = Utility.getInputFromSocket(inputFromSocket);
 					handleUpdateAction(contextStr, contextFrom);
+					//测试
+					//上下文正确，但是端口这个问题不知道 handleUpdateAction
+					//System.out.println("CClientConnection==== client context connection to server is "+contextStr+ "and the port is "+ port);
+					
 				} else if (ContextConstant.CONTEXT_PROGRAM_INIT.equals(action)) {
 					// program init to get context
 					contextStr = Utility.getInputFromSocket(inputFromSocket);
 					port = Utility.getInputFromSocket(inputFromSocket);
 					handleInitAction(contextStr, outputToSocket, port);
+					//System.out.println("CClientConnection==== client context init to program is "+contextStr + "and the port is "+ port);
 				} else if (ContextConstant.CONTEXT_GET.equals(action)) {
 					// program get context when running
 					contextStr = Utility.getInputFromSocket(inputFromSocket);

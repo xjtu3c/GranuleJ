@@ -2,11 +2,11 @@ package gui.constant;
 
 public class GranuleConstant {
 
-	public static final String GRANULE_SERVER_IP = "202.117.10.175";	
+	public static final String GRANULE_SERVER_IP = "202.117.10.236" ;
 	
-	public static final int LOCAL_AS_CLIENT_PORT = 3128;
+	public static final int LOCAL_AS_CLIENT_PORT = 3128 ;
 
-	public static final int LOCAL_AS_SERVER_PORT = 1218;
+	public static final int LOCAL_AS_SERVER_PORT = 1218 ;
 
 	public static final String GRANULE_REGISTER = "register";
 

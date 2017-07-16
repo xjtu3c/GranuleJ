@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<update_node_list ip="202.117.15.192">
+	<g-tree md5="D07F92A605D0174AB4E7A33CFC41F7AC" raceId="D5140BF166C3D4D2CF5BDF753C42B8F5" location="E:\test\example1\" file="TestGranule.xml">
+		<granule class="Object" context="c0" name="g0">
+			<granule class="A" context="a" name="ga1">
+				<granule class="B" context="b" name="gb1">
+					<granule class="D" context="d" name="gd1" />
+				</granule>
+				<granule class="C" context="c" name="gc1" />
+			</granule>
+		</granule>
+	</g-tree>
+	<g-path md5="D07F92A605D0174AB4E7A33CFC41F7AC">
+		<path name="ga1" value="A:a" />
+		<path name="gb1" value="A:a,B:b" />
+		<path name="gc1" value="A:a,C:c" />
+		<path name="gd1" value="A:a,B:b,D:d" />
+	</g-path>
+</update_node_list>

@@ -28,6 +28,7 @@ public class ContextServer {
 	// 用于控制延迟批量处理，
 	private static int count = 0;
 
+
 	public static ContextServer getInstance() {
 		if (cs == null) {
 			cs = new ContextServer();
@@ -41,6 +42,7 @@ public class ContextServer {
 
 	public void init() {
 		String serverDir = Utility.getServerDir();
+		//System.out.println("serverDir:...."+serverDir);
 		File fileDir = new File(serverDir);
 		if (!fileDir.exists()) {
 			fileDir.mkdir();
@@ -50,6 +52,7 @@ public class ContextServer {
 
 	public void loadContextDoc(String serverDir) {
 		String filePath = Utility.getServerDir() + "context.xml";
+		
 		try {
 			if (!new File(filePath).exists()) {
 				Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
@@ -78,6 +81,7 @@ public class ContextServer {
 			cValue = attrMap.getNamedItem("value").getNodeValue();
 			updateContextHash(cName, cValue);
 		}
+		//System.out.println("contexr server : loadContextDocToHash.....");
 	}
 
 	public void addContexts(String contextStr) {
@@ -114,7 +118,7 @@ public class ContextServer {
 		List<String> ipList = null;
 		int ipListSize = 0;
 		String ip = "";
-		for (int i = 0; i < arrSize; i++) {
+		for (int i = 0; i < arrSize-1; i++) {
 			context = contextArr[i].split(":");
 			cName = context[0];
 			cValue = context[1];

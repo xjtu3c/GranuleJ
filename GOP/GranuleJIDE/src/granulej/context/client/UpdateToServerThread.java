@@ -25,6 +25,10 @@ public class UpdateToServerThread implements Runnable {
 			PrintWriter socketWriter = new PrintWriter(socketOutput);
 			socketWriter.println(operationType);
 			socketWriter.println(contextStr);
+			//测试
+			//上下文内容正确
+			//System.out.println("UpdateToServerThread****  the updata context is :"+ contextStr +" and the port is "+ContextConstant.CONTEXT_SERVER_PORT);
+			
 			socketWriter.flush();
 			socketWriter.close();
 			sock.close();

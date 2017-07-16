@@ -58,7 +58,7 @@ public class RunAction implements ActionListener {
 	
 
 	public static void main(String[] args) {
-
+		
 	}
 
 	class Dumpoutput implements Runnable{
@@ -189,8 +189,10 @@ public class RunAction implements ActionListener {
 			 sb.append(" & ");			
 			 jpath=".;"+path+"javassist.jar";
 			 syspath=";"+curDir;
-			 if(!isStandard)
+			 if(!isStandard){
 				 sb.append(" java -agentlib:"+path+"GVM "+" -cp "+jpath+syspath+config.getClasspath()+" "+mainarg);
+				 System.out.println("11 if(! isStandard)  :"+path);
+			 }
 			 else
 				 sb.append(" java -cp "+jpath+syspath+config.getClasspath()+" "+mainarg);
 			 }
@@ -198,8 +200,10 @@ public class RunAction implements ActionListener {
 				 //the path is not changed which is already absolute
 				 jpath=".:"+path+"javassist.jar";
 				 syspath=":"+curDir;
-				 if(!isStandard)
+				 if(!isStandard){
 					 sb.append(" java -agentlib:"+path+"GVM "+" -cp "+jpath+syspath+config.getClasspath()+" "+mainarg);
+					 System.out.println(path);
+				 }
 				 else
 					 sb.append(" java -cp "+jpath+syspath+config.getClasspath()+" "+mainarg);
 			 }	

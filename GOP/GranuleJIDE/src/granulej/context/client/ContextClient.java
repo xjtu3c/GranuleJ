@@ -113,6 +113,8 @@ public class ContextClient {
 			PrintWriter socketWriter = new PrintWriter(socketOutput);
 			socketWriter.println(ContextConstant.CONTEXT_CLIENT_INT);
 			socketWriter.println(contextStr);
+			//测试是否获取信息：
+			//System.out.println("获取从上下文服务器的上下文信息：。。。。"+contextStr);
 			socketWriter.println(ContextConstant.CONTEXT_CLIENT_PORT);
 			socketWriter.flush();
 			while (flag) {
@@ -267,6 +269,7 @@ public class ContextClient {
 		}
 		// 更新到服务器
 		if (!contextToServer.isEmpty()) {
+			
 			new Thread(new UpdateToServerThread(contextToServer, ContextConstant.CONTEXT_REG)).start();
 		}
 		return feedback;
@@ -313,8 +316,11 @@ public class ContextClient {
 			if (ContextConstant.CONTEXT_MODIFIER_PUB.equals(modifier)) {
 				if (!"".equals(contextToServer)) {
 					contextToServer = contextToServer + ";" + cName + ":" + cValue;
+					//测试上下文是否存在
+					//System.out.println("ContxtClient====   contextToServer is ....."+contextToServer);
 				} else {
 					contextToServer = contextToServer + cName + ":" + cValue;
+					//System.out.println("ContxtClient====  contextToServer is ....."+contextToServer);
 				}
 			}
 			updateContextHash(cName, cValue);
@@ -332,7 +338,16 @@ public class ContextClient {
 		}
 		// 更新到集中管理服务器
 		if (!ContextConstant.CONTEXT_UPDATE_FROM_SERVER.equals(contextFrom)) {
-			new Thread(new UpdateToServerThread(contextToServer, ContextConstant.CONTEXT_UPDATE)).start();
+			
+			/*
+			 * 创建线程的时候
+			 * contextStr是对的   服务器端的上下文是可以存入内容
+			 * contextToServer 是空的
+			 */
+			System.out.println("ContxtClient==== context update to contextToServer is contextStr....."+contextStr);
+			System.out.println("ContxtClient==== context update to contextToServer is contextToServer....."+contextToServer);
+			//new Thread(new UpdateToServerThread(contextToServer, ContextConstant.CONTEXT_UPDATE)).start();
+			new Thread(new UpdateToServerThread(contextStr, ContextConstant.CONTEXT_UPDATE)).start();
 		}
 	}
 
@@ -344,6 +359,7 @@ public class ContextClient {
 		for (int i = 0; i < portSize; i++) {
 			port = portList.get(i);
 			contextStr = getUpdateContextForPort(contextArr, listenMap.get(port));
+			System.out.println("ContxtClient==== context update to updateToListenPort is contextStr....."+contextStr);
 			new Thread(new UpdateToProgramThread(port, contextStr)).start();
 		}
 	}
@@ -379,6 +395,8 @@ public class ContextClient {
 			PrintWriter socketWriter = new PrintWriter(socketOutput);
 			socketWriter.println(ContextConstant.CONTEXT_GET);
 			socketWriter.println(newContextStr);
+			// liyu ceshi
+			//System.out.println("ContxtClient====   request Context From Server is "+newContextStr+ "and the port is " + ContextConstant.CONTEXT_SERVER_PORT);
 			socketWriter.flush();
 
 			while (flag) {

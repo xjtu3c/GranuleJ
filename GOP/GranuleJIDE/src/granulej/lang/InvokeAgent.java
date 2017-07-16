@@ -40,7 +40,7 @@ public class InvokeAgent {
 	}
 	
 	//替换返回类型不是void的方法
-	public static <IN,OUT> OUT replaceMethod(IN obj,String gName,String methodName,Class[] argsTypes,Object [] args)
+	public static <IN,OUT> OUT replaceMethod(IN obj,String gName,String methodName,Class<?>[] argsTypes,Object [] args)
 	{
 //		printLog("in replaceMethod");
 		
@@ -61,13 +61,30 @@ public class InvokeAgent {
 		//执行新对象的函数,并将新的对象更新到对象列表中
 		Object result = executeShadowClassMethod(exeUnit.newInstance,exeUnit.newClass,methodName,argsTypes,args);
 		ObjectAgent.updateObject(obj.hashCode(), exeUnit.newInstance);
-		new Thread(new xmlFileUpdate(IndividualInfo.getInstance().getConfigfile(),"cTree")).start();
+		/*
+		 * liyu 
+		 * 判断是否是线程的未关闭引起了 线程阻塞
+		 * 设置定时关闭线程
+		 * 注释掉不影响程序运行-----阻塞在这里无关
+		 */
 		
+		new Thread(new xmlFileUpdate(IndividualInfo.getInstance().getConfigfile(),"cTree")).start();
+/*		Thread t = new Thread(new xmlFileUpdate(IndividualInfo.getInstance().getConfigfile(),"cTree"));
+		t.start();
+		 while (true){
+	            try{
+	                    Thread.sleep(3*1000);//阻塞5妙
+	                }catch(InterruptedException e){
+	                    e.printStackTrace();
+	                    break;//捕获到异常之后，执行break跳出循环。
+	                }
+	        }*/
+
 		return (OUT)result;
 	}
 	
 	//替换返回类型为void的方法
-	public static <IN> void replaceVoidMethod(IN obj,String gName,String methodName,Class[] argsTypes,Object [] args)
+	public static <IN> void replaceVoidMethod(IN obj,String gName,String methodName,Class<?>[] argsTypes,Object [] args)
 	{
 //		printLog("in replaceVoidMethod");
 		
@@ -90,7 +107,26 @@ public class InvokeAgent {
 //		//执行新对象的函数，并将新的对象更新到对象列表中
 		executeShadowClassMethod(exeUnit.newInstance,exeUnit.newClass,methodName,argsTypes,args);
 		ObjectAgent.updateObject(obj.hashCode(), exeUnit.newInstance);
+		
+		/*
+		 * liyu 
+		 * 判断是否是线程的未关闭引起了 线程阻塞
+		 * 设置定时关闭线程
+		 * 注释掉不影响程序运行-----阻塞在这里无关
+		 *
+		 */
 		new Thread(new xmlFileUpdate(IndividualInfo.getInstance().getConfigfile(),"cTree")).start();
+		
+/*		Thread t = new Thread(new xmlFileUpdate(IndividualInfo.getInstance().getConfigfile(),"cTree"));
+		t.start();
+		 while (true){
+	            try{
+	                    Thread.sleep(3*1000);//阻塞5妙
+	                }catch(InterruptedException e){
+	                    e.printStackTrace();
+	                    break;//捕获到异常之后，执行break跳出循环。
+	                }
+	        }*/
 	}	
 	
 	private static GranuleUnit searchForSimilarGranule(ArrayList<String> gNames)
@@ -100,9 +136,9 @@ public class InvokeAgent {
 			return null;
 		
 		//查找并执行相似粒，直到找到合适的粒为止
-		Class simiGranule=null;
+		Class<?> simiGranule=null;
 		String simiFileName=null;
-		Class currentGranule = null;
+		Class<?> currentGranule = null;
 
 		while(simiGranule==null||simiFileName==null||currentGranule==null)
 		{
@@ -111,6 +147,7 @@ public class InvokeAgent {
 			boolean isFit = true;
 			for(int j=gNames.size()-1;j>=0&&isFit;--j)
 			{
+//				 System.out.println(j);
 				 String gName = gNames.get(j);
 				 //TODO 这里如果在服务器上实在找不到粒，应该跳出去，但现在的服务器没有处理这种情况，找不到就一直找
 //				 System.out.println("gName: "+gName);
@@ -129,15 +166,16 @@ public class InvokeAgent {
 	             }
 	
 	             //TODO 这里还需要对相似粒的子粒做适合性检测，只有当对应的子粒也符合适合性条件的时候才能算是相似粒
-	             if(executeGranule((Class)similarGra[0]))
+	             if(executeGranule((Class<?>)similarGra[0]))
 	             {
 	            	 if(j==0)
 	            	 {
-	            		 simiGranule = (Class)similarGra[0];
+	            		 simiGranule = (Class<?>)similarGra[0];
+	            		 
 	            	 }
 	            	 if(j==gNames.size()-1)
 	            	 {
-	            		 currentGranule = (Class)similarGra[0];
+	            		 currentGranule = (Class<?>)similarGra[0];
 		                 simiFileName = (String)similarGra[1]; 
 	            	 }
 	             }
@@ -149,8 +187,8 @@ public class InvokeAgent {
 			
 
 		}
-		
-//		printLog("find similar granule: "+simiGranule);
+//		
+		printLog("find similar granule: "+simiGranule);
 		
 		//如果服务器上找不到合适的粒
 		if(simiGranule==null||simiFileName==null)
@@ -158,7 +196,8 @@ public class InvokeAgent {
 			System.out.println("Similar granule not found!");
 			return null;
 		}
-		
+		//ok 与线程阻塞无关
+	
 		GranuleUnit unit = new GranuleUnit(simiGranule,currentGranule,simiFileName);
 		return unit;
 	}
@@ -174,6 +213,10 @@ public class InvokeAgent {
 			try{
 //				System.out.println("lastGranules.get(0): "+lastGranules.get(0));
 //				System.out.println("simiGranule.getName(): "+unit.simiGranule.getName());
+				/*
+				 * 鲤鱼
+				 * 问题1：文件解析中的开启了线程池中的线程 未关闭
+				 */
 				XmlParser.replaceGranuleTree(lastGranules.get(0), unit.simiFileName, unit.simiGranule.getName());
 			}
 			
@@ -191,7 +234,7 @@ public class InvokeAgent {
 //			Object curInstance = instances.get(obj.hashCode());
 
 			ClassLoader classLoader = obj.getClass().getClassLoader();
-			Class newClass = null;
+			Class<?> newClass = null;
 			try{
 				newClass = classLoader.loadClass(shadowClassName);
 			}
@@ -206,6 +249,7 @@ public class InvokeAgent {
 				return null;
 			}
 			
+			
 			Object newInstance = transferClassAndObjectState(newClass,obj);
 
 			if(newInstance==null)
@@ -215,7 +259,10 @@ public class InvokeAgent {
 			}
 			
 			ExecuteUnit result = new ExecuteUnit(newInstance,newClass);
-//			System.out.println("class is on the safePoint!");
+			/*
+			 * liyu ceshi 
+			 */
+			//System.out.println("sssssssssss!");
 			return result;
 
 		}
@@ -225,7 +272,7 @@ public class InvokeAgent {
 	}
 	
 	//执行影子类的方法
-	private static Object executeShadowClassMethod(Object obj,Class cls,String methodName,Class [] argsTypes,Object[] args)
+	private static Object executeShadowClassMethod(Object obj,Class<?> cls,String methodName,Class<?> [] argsTypes,Object[] args)
 	{
 		//获取方法
 //		printLog("class:"+cls.getName());
@@ -256,16 +303,17 @@ public class InvokeAgent {
 	}
 	
 	//装换类的状态和对象的状态
-	private static Object transferClassAndObjectState(Class newClass,Object oldObject)
+	private static Object transferClassAndObjectState(Class<?> newClass,Object oldObject)
 	{
 		//接下来该转换类的状态和对象，对应vs中的translateClassState()
-		Class oldClass=oldObject.getClass();
+		Class<?> oldClass=oldObject.getClass();
 		
 //		System.out.println("start transfer class and object!");
 		
 		//生成新的对象
 		Object resObj=null;
 		try{
+			
 			Constructor constructor = newClass.getDeclaredConstructor();
 			constructor.setAccessible(true);
 
@@ -277,8 +325,9 @@ public class InvokeAgent {
 			printLog(newClass.getName()+"create new instance failed"+"  ! in method of transferClassAndObjectState");
 			return resObj;
 		}
+		//liyu 注释。。。。。。。。。这个没用上
+		//int fieldCount=0;
 		
-		int fieldCount=0;
 		//获取新类的属性，如果刚好旧类中的静态属性存在，那么就转移过来，如果不存在，则初始化为null
 		Field [] newFields = newClass.getDeclaredFields();
 		for(Field field:newFields)
@@ -329,7 +378,7 @@ public class InvokeAgent {
 				catch(Exception e)
 				{
 					e.printStackTrace();
-					printLog(field.getName()+"get object filed failed"+"  ! in method of transferClassAndObjectState");
+					printLog(field.getName()+" get object filed failed"+"  ! in method of transferClassAndObjectState");
 				}
 				
 				//将属性设置到新类中
@@ -387,7 +436,7 @@ public class InvokeAgent {
 			Method fitMethod = fitnessMethods.get(graName);
 			if(fitMethod==null)
 			{
-				Class granule = GranuleLoader.loadGranule(graName);
+				Class<?> granule = GranuleLoader.loadGranule(graName);
 				loadedGranules.put(graName, granule);
 				
 				try{
@@ -423,7 +472,7 @@ public class InvokeAgent {
 		return true;
 	}
 	
-	public static boolean executeGranule(Class granule)
+	public static boolean executeGranule(Class<?> granule)
 	{
 		
 ////		printLog("granule name is: "+granule.getName());
@@ -447,8 +496,10 @@ public class InvokeAgent {
 		try{
 			//先将fitness方法的访问权限去掉，然后再执行
 			fitMethod.setAccessible(true);
-			result=(Boolean)fitMethod.invoke(null, null);
-//			printLog("fitness result of "+granule.getName()+": "+result);
+			//result=(Boolean)fitMethod.invoke(null, null);
+			result=(Boolean) fitMethod.invoke(null, null);
+			//ceshi liyu 
+			printLog("fitness result of "+granule.getName()+": "+result);
 		}
 		catch(Exception e)
 		{
@@ -469,7 +520,7 @@ public class InvokeAgent {
 		{
 			if(graName.equals("g0"))
 				continue;
-			Class granule=loadedGranules.get(graName);
+			Class<?> granule=loadedGranules.get(graName);
 			if(granule==null){
 				System.out.println("已经加载："+graName);
 				granule = GranuleLoader.loadGranule(graName);

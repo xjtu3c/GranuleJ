@@ -1,0 +1,2 @@
+public static final String CONTEXT_SERVER_IP = "202.117.10.236" ;
+public static final int CONTEXT_SERVER_PORT = 3218 ;

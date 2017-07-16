@@ -3,7 +3,7 @@ public class ConstantVariable {
 	public static final int CONTEXT_CLIENT_PORT = 1219;
 
 	public static final int CONTEXT_SERVER_PORT = 3129;
-
+	
 	public static final String CONTEXT_CLIENT_INT = "cinit";
 
 	public static final String CONTEXT_CLIENT_DES = "cdestroy";
